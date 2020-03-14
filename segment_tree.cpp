@@ -1,10 +1,11 @@
+
 struct MaxSeg{
 	vector<int> seg;
 	vector<int> lazy;
 	int S;
-	
-	Maxseg(vector<int>& arr){
-		seg = arr;
+
+	void build(){
+
 		S = (1 << (int)ceil(log2(seg.size())));
 		int l = S - seg.size();
 		for(int i = 0; i < l; i++) seg.pb(-INF);
@@ -15,6 +16,15 @@ struct MaxSeg{
 		reverse(all(seg));
 	
 		lazy = vector<int>(seg.size() * 2, 0);
+	}
+	
+	MaxSeg(vector<int>& arr){
+		seg = arr;
+		build();
+	}
+	MaxSeg(int n){
+		seg = vector<int>(n, 0);
+		build();
 	}
 	
 	void push(int j){
@@ -69,7 +79,7 @@ struct MinSeg{
 	vector<int> lazy;
 	int S;
 	
-	Minseg(vector<int>& arr){
+	MinSeg(vector<int>& arr){
 		seg = arr;
 		S = (1 << (int)ceil(log2(seg.size())));
 		int l = S - seg.size();
