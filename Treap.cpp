@@ -22,6 +22,8 @@ namespace Treap{
 	int new_node(){
 		return ind++;
 	}
+	
+	
  
 	void push(int j){
  
@@ -39,6 +41,22 @@ namespace Treap{
 		}
  
  
+	}
+	
+	void print(int j){
+		if(!j)return;
+		push(j);
+		cout << node[j].key << " " << node[j].val.second << "\n"; 
+
+		int l = node[j].left;
+		int r = node[j].right;
+
+		if(l){
+			print(l);
+		}
+		if(r){
+			print(r);
+		}
 	}
  
 	void up(int j){
@@ -132,6 +150,26 @@ namespace Treap{
 		up(j);
  
 	}
+	
+	int erase(int& j, double v){
+
+		push(j);
+
+		if(node[j].key == v) {
+			int ret = j;
+			merge(j, node[j].left, node[j].right);
+			return ret;
+		}
+		else{
+			if(v < node[j].key) return erase(node[j].left, v);
+			else return erase(node[j].right, v);
+		}
+		
+		push(node[j].left);
+		push(node[j].right);
+		up(j);
+
+	}
  
 	int add(int v){
 		int j = new_node();
@@ -146,4 +184,5 @@ namespace Treap{
  
  
 	}
+	
 }
