@@ -11,10 +11,10 @@ using namespace std;
 
 
 int32_t main(){
-      ios_base::sync_with_stdio(false);
-      cin.tie(NULL);
-      
-      freopen("q.gir", "r", stdin);
-      freopen("q.cik", "w", stdout);
-      
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	freopen("q.gir", "r", stdin);
+	freopen("q.cik", "w", stdout);
+	
 }
