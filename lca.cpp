@@ -20,41 +20,41 @@ struct Tree{
 		
 		for(int d = 1; d < 25; d++){
 
-      	      for(int x = 0; x < n; x++){
+			for(int x = 0; x < n; x++){
 
-      	            anc[d][x] = anc[d - 1][anc[d - 1][x]];
+				anc[d][x] = anc[d - 1][anc[d - 1][x]];
 
-      	      }
+		}
 
       	}
 
 	} 
 
 	void init(int x, int pre){
-      
-      	for(int i = 0; i < adj[x].size(); i++){
 
-        	    int y = adj[x][i];
+		for(int i = 0; i < adj[x].size(); i++){
 
-	            if(y == pre)continue;
+			int y = adj[x][i];
 
-	            anc[0][y] = x;
+			if(y == pre)continue;
 
-	            depth[y] = depth[x] + 1;
+			anc[0][y] = x;
 
-	            init(y, x);
+			depth[y] = depth[x] + 1;
 
-	            sub[x] += sub[y];
+			init(y, x);
 
-	      }
+			sub[x] += sub[y];
+
+		}
 	 
 	}
 
 	int LCA(int x, int y){
-	      
-	      if(depth[x] < depth[y])swap(x, y);
-	      
-	      for(int w = (1 << 24), d = 24; d >= 0; w /= 2, d--){
+
+		if(depth[x] < depth[y])swap(x, y);
+
+		for(int w = (1 << 24), d = 24; d >= 0; w /= 2, d--){
 			
 			if(depth[x] - depth[y] >= w){
 				
@@ -63,28 +63,28 @@ struct Tree{
 			}
 
 		}
-	      
-	      if(x == y) return x;
-	      
-	      for(int i = 24; i >= 0; i--){
 
-	            if(anc[i][x] != anc[i][y]){
+		if(x == y) return x;
 
-	                  x = anc[i][x];
+		for(int i = 24; i >= 0; i--){
 
-	                  y = anc[i][y];
+			if(anc[i][x] != anc[i][y]){
 
-	            }
+				x = anc[i][x];
 
-	      }
+				y = anc[i][y];
 
-	      return anc[0][x];
+			}
+
+		}
+
+		return anc[0][x];
 
 	}
 
 	int up(int x, int k){
 
-            for(int w = (1 << 24), d = 24; d >= 0; w /= 2, d--){
+		for(int w = (1 << 24), d = 24; d >= 0; w /= 2, d--){
 			
 			if(k >= w){
 				
@@ -96,22 +96,22 @@ struct Tree{
 		
 		}
 
-            return x;
+		return x;
 
       }
 
 	int dist(int x, int y){
 
-	      int l = LCA(x, y);
+		int l = LCA(x, y);
 
-	      return depth[x] + depth[y] - 2 * depth[l];
+		return depth[x] + depth[y] - 2 * depth[l];
 
 	}
 
 	bool isparent(int x, int y){
 
-            return LCA(x, y) == x;
+		return LCA(x, y) == x;
 
-      }
+	}
 	
 };
