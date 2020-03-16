@@ -51,17 +51,18 @@ struct Tree{
 	}
 
 	int LCA(int x, int y){
-	      if(depth[x] < depth[y])swap(x,y);
 	      
-	      while(depth[x] != depth[y]){
+	      if(depth[x] < depth[y])swap(x, y);
+	      
+	      for(int w = (1 << 24), d = 24; d >= 0; w /= 2, d--){
+			
+			if(depth[x] - depth[y] >= w){
+				
+				x = anc[d][x];
 
-	            int diff = depth[x] - depth[y];
+			}
 
-	            diff = log2(diff&-diff);
-
-	            x = anc[diff][x];
-
-	      }
+		}
 	      
 	      if(x == y) return x;
 	      
@@ -83,15 +84,17 @@ struct Tree{
 
 	int up(int x, int k){
 
-            while(k){
+            for(int w = (1 << 24), d = 24; d >= 0; w /= 2, d--){
+			
+			if(k >= w){
+				
+				x = anc[d][x];
 
-                  int diff = log2(k&-k);
-
-                  k -= k & -k;
-
-                  x = anc[diff][x];
-
-            }
+				k -= w;
+			
+			}
+		
+		}
 
             return x;
 
