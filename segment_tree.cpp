@@ -79,8 +79,7 @@ struct MinSeg{
 	vector<int> lazy;
 	int S;
 	
-	MinSeg(vector<int>& arr){
-		seg = arr;
+	void build(){
 		S = (1 << (int)ceil(log2(seg.size())));
 		int l = S - seg.size();
 		for(int i = 0; i < l; i++) seg.pb(INF);
@@ -91,6 +90,16 @@ struct MinSeg{
 		reverse(all(seg));
 	
 		lazy = vector<int>(seg.size() * 2, 0);
+	}
+
+	MinSeg(vector<int>& arr){
+		seg = arr;
+		build();
+	}
+
+	MinSeg(int s){
+		seg = vector<int>(s, INF);
+		build();
 	}
 	
 	void push(int j){
