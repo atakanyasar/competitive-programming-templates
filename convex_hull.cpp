@@ -79,52 +79,66 @@ struct Hull : multiset<Line> {
 
 };
 
+/***********************************************************/
 
+struct Point{
 
-bool Q=false;
-struct Line{
-    mutable int m,c;
-    mutable long double x;
-    Line(int M,int C,int X):m(M),c(C),x(X){}
-    bool operator<(const Line& next)const{
-        if(Q==false){
-            return m > next.m;
-        }
-        else return x < next.x;
-    }
-    int get(int X){return m*X+c;}
-};
-struct Hull : multiset<Line> {
-    long double cross(iterator a,iterator b){
-        long double A=a->m, B=a->c, C=b->m, D=b->c;
-        return (D-B)/(A-C);
-    }
-    bool isect(iterator a,iterator b){
-        if(b==end()){ a->x=INF; return false; }
-        if(a->m == b->m) a->x =((a->c > b->c)?-INF:INF);
-        else a->x = cross(a,b);
-        return a->x >= b->x;
-    }
-    void add(int M,int C){
-        iterator pre,curr,next;
-        curr=insert(Line(M,C,0));
-        next=pre=curr;
-        next++;
-        while(isect(curr,next))next=erase(next);
-        if(curr!=begin()&&isect(--pre,curr))isect(pre,curr=erase(curr));
-        while( (curr=pre)!=begin() && (--pre)->x >= curr->x )isect(pre,erase(curr));
-    }
-    int query(int X){
-        Q=true;
-        Line curr=*lower_bound(Line(0,0,X));
-        Q=false;
-        return curr.get(X);
-    }
+	mutable long double x, y;
+
+	Point(){}
+	Point(long double _m, long double _n): x(_m), y(_n){}
+
+	bool operator<(const Point& X)const{
+
+		return x < X.x || (x == X.x && y < X.y);
+
+	}
+
 };
 
+struct ConvexHull : multiset<Point> {
+
+	bool isect(iterator A, iterator B, iterator C){
+
+		if(C == begin() || B == begin() || C == end() || B == end() || A == end()){
+
+			return false;
+
+		}
+
+		if(A->x == B->x) return true;
+		if(B->x == C->x) false;
+
+		return (B->y - A->y) / (B->x - A->x) >= (C->y - B->y) / (C->x - B->x);
+
+	}
+
+	void add(int x, int y){
+
+		iterator curr = insert(Point(x, y));
+
+		while(isect(curr, next(curr), next(next(curr)))) erase(next(curr));
+
+		while(isect(prev(curr), curr, next(curr))) curr = erase(curr);
+
+		while(isect(prev(prev(curr)), prev(curr), curr)){
+
+			erase(prev(curr));
+
+		}
+
+	}
+
+	bool query(){
+
+		///
+
+	}
+
+};
 
 
-
+/****************************************************************/
 
 struct LinearHull : deque<Line>{
       
