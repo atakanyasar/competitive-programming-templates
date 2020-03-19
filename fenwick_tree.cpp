@@ -52,7 +52,7 @@ struct Fenwick{
 
 	T query(int j){
 		j++;
-		int v = 0;
+		T v = 0;
 		for(; j > 0; j -= j & -j) operation(v, bit[j]);
 		return v;
 	}
