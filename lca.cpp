@@ -26,7 +26,7 @@ struct Tree{
 
 				anc[d][x] = anc[d - 1][anc[d - 1][x]];
 
-		}
+			}
 
 		}
 
