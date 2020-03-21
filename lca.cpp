@@ -1,10 +1,10 @@
 struct Tree{
 	vector<vector<int> >& adj;
 	vector<vector<int> > anc;
-	vector<vector<int> > cost;
 	vector<int> depth;
 	vector<int> sub;
 	vector<bool> vis;
+	vector<int> T, X;
 	int n;
 	int root;
 
@@ -15,6 +15,8 @@ struct Tree{
 		depth = vector<int>(n, 0);
 		vis = vector<bool> (n, false);
 		sub = vector<int> (n, 1);
+		T = vector<int> (n);
+		X = vector<int> (n);
 		
 		init(root, -1);
 		
@@ -26,11 +28,15 @@ struct Tree{
 
 		}
 
-      	}
+		}
 
 	} 
 
 	void init(int x, int pre){
+
+		static int t = 0;
+
+		T[x] = t++;
 
 		for(int i = 0; i < adj[x].size(); i++){
 
@@ -47,6 +53,8 @@ struct Tree{
 			sub[x] += sub[y];
 
 		}
+
+		X[x] = t++;
 	 
 	}
 
@@ -98,7 +106,7 @@ struct Tree{
 
 		return x;
 
-      }
+	}
 
 	int dist(int x, int y){
 
