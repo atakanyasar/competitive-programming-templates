@@ -123,3 +123,33 @@ struct Tree{
 	}
 	
 };
+
+
+struct TreeCompressor : Tree{
+	
+	vector<int> aux[1000003];
+	
+	void compress(vector<int>& arr){
+
+		sort(all(arr), [&](int x, int y){return T[x] < T[y];});
+
+		int l = sz(arr);
+
+		for(int i = 1; i < l; i++) arr.pb(LCA(arr[i - 1], arr[i]));
+
+		sort(all(arr), [&](int x, int y){return T[x] < T[y];});
+
+		stack<int> st;
+		st.push(root);
+
+		for(auto x : arr){
+			if(x == st.top()) continue;
+
+			while(T[x] < T[st.top()] || X[x] > X[st.top()]) st.pop();
+
+			aux[st.top()].pb(x);
+			aux[x].pb(st.top());
+			st.push(x);
+		}
+	}
+};
