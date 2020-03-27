@@ -1,5 +1,17 @@
+#include<bits/stdc++.h>
+#define pb push_back
+#define ii pair<int,int>
+#define all(x) (x).begin(),(x).end()
+#define sz(x) ((int)(x).size())
+#define INF 100000000000000000
+#define modulo 1000000007
+#define mod 998244353
+#define int long long int
+using namespace std;
+
+
+vector<int> adj[1000005];
 struct Tree{
-	vector<vector<int> >& adj;
 	vector<vector<int> > anc;
 	vector<int> depth;
 	vector<int> sub;
@@ -8,7 +20,7 @@ struct Tree{
 	int n;
 	int root;
 
-	Tree(vector<vector<int> >& a, int N = 1e6, int r = 1): adj(a){
+	Tree(int N = 1e6, int r = 1){
 		n = N + 5;
 		root = r;
 		anc = vector<vector<int> > (25, vector<int>(n, 0));
@@ -128,6 +140,8 @@ struct Tree{
 struct TreeCompressor : Tree{
 	
 	vector<int> aux[1000003];
+
+	TreeCompressor(int n = 1e6):Tree(n){}
 	
 	void compress(vector<int>& arr){
 
@@ -153,3 +167,12 @@ struct TreeCompressor : Tree{
 		}
 	}
 };
+
+int32_t main(){
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	freopen("q.gir", "r", stdin);
+	freopen("q.cik", "w", stdout);
+	
+}
