@@ -142,7 +142,7 @@ namespace Treap{
 
 		else if(node[i].prior > node[j].prior){
 
-			split(j, node[i].key, node[i].left, node[i].right);
+			split(j, node[i], node[i].left, node[i].right);
 
 			j = i;
 
