@@ -141,48 +141,48 @@ struct ConvexHull : multiset<Point> {
 /****************************************************************/
 
 struct LinearHull : deque<Line>{
-      
-      long double cross(Line& A, Line& B){
-            long double m1 = A.m, m2 = B.m;
-            long double n1 = A.n, n2 = B.n;
 
-            if(m1 == m2){
-                  return (n1 > n2 ? -INF : INF);
-            }
-            return (n1 - n2) / (m2 - m1);
-      }
-      bool isect(Line& A, Line& B){
-            
-            A.p = cross(A, B);
+	long double cross(Line& A, Line& B){
+		long double m1 = A.m, m2 = B.m;
+		long double n1 = A.n, n2 = B.n;
 
-            return !(A.p < B.p);
-      }
-      void add_back(int m, int n){
-            Line curr = Line(m, n, INF);
-            if(size() > 0){
-                  isect(back(), curr);
-                  while(size() > 1 && isect(*prev(--end()), back())){
-                        pop_back();
-                        isect(back(), curr);
-                  } 
-            }
-            push_back(curr);
-      }
-      void add_front(int m, int n){
-            Line curr = Line(m, n, INF);
-            while(!empty() && isect(curr, front())){
-                  pop_front();
-            }
-            if(empty())curr.p = INF;
-            
-            push_front(curr);
-      }
+		if(m1 == m2){
+			return (n1 > n2 ? -INF : INF);
+		}
+		return (n1 - n2) / (m2 - m1);
+	}
+	bool isect(Line& A, Line& B){
 
-      int query(int x){
-            if(empty()) return INF;
-            Q = false;
-            iterator temp = lower_bound(begin(), end(), Line(0, 0, x));
-            Q = true;
-            return temp->m * x + temp->n;
-      }
+		A.p = cross(A, B);
+
+		return !(A.p < B.p);
+	}
+	void add_back(int m, int n){
+		Line curr = Line(m, n, INF);
+		if(size() > 0){
+			isect(back(), curr);
+			while(size() > 1 && isect(*prev(--end()), back())){
+			pop_back();
+			isect(back(), curr);
+			} 
+		}
+		push_back(curr);
+	}
+	void add_front(int m, int n){
+		Line curr = Line(m, n, INF);
+		while(!empty() && isect(curr, front())){
+			pop_front();
+		}
+		if(empty())curr.p = INF;
+
+		push_front(curr);
+	}
+
+	int query(int x){
+		if(empty()) return INF;
+		Q = false;
+		iterator temp = lower_bound(begin(), end(), Line(0, 0, x));
+		Q = true;
+		return temp->m * x + temp->n;
+	}
 };
