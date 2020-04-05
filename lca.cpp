@@ -5,6 +5,7 @@ struct Tree{
 	vector<int> sub;
 	vector<bool> vis;
 	vector<int> T, X;
+	vector<int> seq;
 	int n;
 	int root;
 
@@ -35,8 +36,10 @@ struct Tree{
 	void init(int x, int pre){
 
 		static int t = 0;
-
+		
 		T[x] = t++;
+
+		seq.pb(x);
 
 		for(int i = 0; i < adj[x].size(); i++){
 
@@ -125,21 +128,31 @@ struct Tree{
 };
 
 
+vector<int> aux[1000003];
+vector<int> mark(1000005, 0);
 struct TreeCompressor : Tree{
-	
-	vector<int> aux[1000003];
 
 	TreeCompressor(int n = 1e6):Tree(n){}
 	
+	void sort(vector<int>& temp){
+		for(auto x : temp) mark[x] = 1;
+		temp.clear();
+		for(auto x : seq){
+			if(mark[x]){
+				temp.pb(x);
+			}
+		}
+	}
+
 	void compress(vector<int>& arr){
 
-		sort(all(arr), [&](int x, int y){return T[x] < T[y];});
+		sort(arr);
 
 		int l = sz(arr);
 
 		for(int i = 1; i < l; i++) arr.pb(LCA(arr[i - 1], arr[i]));
 
-		sort(all(arr), [&](int x, int y){return T[x] < T[y];});
+		sort(arr);
 
 		stack<int> st;
 		st.push(root);
