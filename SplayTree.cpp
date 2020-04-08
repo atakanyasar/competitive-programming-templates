@@ -10,6 +10,9 @@ struct Node{
 	bool operator<(Node& A){
 		return key < A.key || (key == A.key && id < A.id);
 	}
+	bool operator==(Node& A){
+		return id == A.id;
+	}
 
 } node[2000000];
 
@@ -219,6 +222,20 @@ struct SplayTree{
 		node[l].parent = 0;
 		node[r].parent = 0;
 		return merge(l, r);
+	}
+
+	int lower_bound(Node v){ /************* add end ************/
+		ii p = split(root, [&](int j){return node[j] < v;});
+		int t = leftmost(p.second);
+		root = merge(p.first, t);
+		return t;	
+	}
+
+	int upper_bound(Node v){
+		ii p = split(root, [&](int j){return node[j] < v || node[j] == v;});
+		int t = leftmost(p.second);
+		root = merge(p.first, t);
+		return t;	
 	}
 
 	int next(int j){
