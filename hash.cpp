@@ -1,44 +1,31 @@
-namespace HASH{
+struct HASH{
+	vector<int> prefix_hash, suffix_hash;
+	vector<int> exp;
+	string s;
+	int X;
+	unsigned int M;
 
-	void getexp(vector<int>& exp, int x, int m){
-		for(int i = 1; i < sz(exp); i++) exp[i] = exp[i - 1] * x % m;
-	}
-	void getexp(vector<unsigned int>& exp, unsigned int x){
-		for(int i = 1; i < sz(exp); i++) exp[i] = exp[i - 1] * x;
-	}
-
-	void prefHash(vector<int>& _hash, string& s, int x, int m){
-		for(int i = 1; i < sz(s); i++){
-			_hash[i] = (_hash[i - 1] * x + s[i] - 'a' + 1) % m;
+	HASH(string str, int x, unsigned int m = ULONG_LONG_MAX){
+		s = " " + str + " ";
+		prefix_hash = vector<int>(sz(s), 0);
+		suffix_hash = vector<int>(sz(s), 0);
+		exp = vector<int>(sz(s), 1);
+		X = x;
+		M = m;
+		for(int i = 1; i < sz(exp); i++) exp[i] = exp[i - 1] * x % M;
+		for(int i = 1; i < sz(s) - 1; i++){
+			prefix_hash[i] = (prefix_hash[i - 1] * x + s[i] - 'a' + 1) % M;
 		}
-	}
-	void prefHash(vector<unsigned int>& _hash, string& s, unsigned int x){
-		for(int i = 1; i < sz(s); i++){
-			_hash[i] = (_hash[i - 1] * x + s[i] - 'a' + 1);
-		}
-	}
-	void suffHash(vector<int>& _hash, string& s, int x, int m){
 		for(int i = sz(s) - 1; i >= 1; i--){
-			_hash[i] = (_hash[i + 1] * x + s[i] - 'a' + 1) % m;
-		}
-	}
-	void suffHash(vector<unsigned int>& _hash, string& s, unsigned int x){
-		for(int i = sz(s) - 1; i >= 1; i--){
-			_hash[i] = (_hash[i + 1] * x + s[i] - 'a' + 1);
+			suffix_hash[i] = (suffix_hash[i + 1] * x + s[i] - 'a' + 1) % M;
 		}
 	}
 
-	int getpHash(vector<int>& _hash, vector<int>& exp, int x, int m, int l, int r){
-		return (_hash[r] - exp[r - l + 1] * _hash[l - 1] % m + m) % m;
-	}
-	unsigned int getpHash(vector<unsigned int>& _hash, vector<unsigned int>& exp, unsigned int x, int l, int r){
-		return (_hash[r] - exp[r - l + 1] * _hash[l - 1]);
+	int prefixHash(int l, int r){
+		return (prefix_hash[r] - exp[r - l + 1] * prefix_hash[l - 1] % M + M) % M;
 	}
 
-	int getsHash(vector<int>& _hash, vector<int>& exp, int x, int m, int l, int r){
-		return (_hash[l] - exp[r - l + 1] * _hash[r + 1] % m + m) % m;
+	int suffixHash(int l, int r){
+		return (suffix_hash[l] - exp[r - l + 1] * suffix_hash[r + 1] % M + M) % M;
 	}
-	unsigned int getsHash(vector<unsigned int>& _hash, vector<unsigned int>& exp, unsigned int x, int l, int r){
-		return (_hash[l] - exp[r - l + 1] * _hash[r + 1]);
-	}
-}
+};
