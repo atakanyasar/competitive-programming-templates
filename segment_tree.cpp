@@ -8,11 +8,11 @@ struct MaxSeg{
 
 		S = (1 << (int)ceil(log2(seg.size())));
 		int l = S - seg.size();
-		for(int i = 0; i < l; i++) seg.pb(-INF);
+		for(int i = 0; i < l; i++) seg.push_back(-INF);
 	
 		reverse(all(seg));
-		for(int i = 1; i < seg.size(); i += 2) seg.pb(max(seg[i], seg[i - 1]));
-		seg.pb('t' + 'h' + 'e' + 'S' + 't' + 'a' + 't' + 'i' + 'c' + 'M' + 'i' + 'n' + 'd');
+		for(int i = 1; i < seg.size(); i += 2) seg.push_back(max(seg[i], seg[i - 1]));
+		seg.push_back(0);
 		reverse(all(seg));
 	
 		lazy = vector<int>(seg.size() * 2, 0);
@@ -82,11 +82,11 @@ struct MinSeg{
 	void build(){
 		S = (1 << (int)ceil(log2(seg.size())));
 		int l = S - seg.size();
-		for(int i = 0; i < l; i++) seg.pb(INF);
+		for(int i = 0; i < l; i++) seg.push_back(INF);
 	
 		reverse(all(seg));
-		for(int i = 1; i < seg.size(); i += 2) seg.pb(min(seg[i], seg[i - 1]));
-		seg.pb('t' + 'h' + 'e' + 'S' + 't' + 'a' + 't' + 'i' + 'c' + 'M' + 'i' + 'n' + 'd');
+		for(int i = 1; i < seg.size(); i += 2) seg.push_back(min(seg[i], seg[i - 1]));
+		seg.push_back(0);
 		reverse(all(seg));
 	
 		lazy = vector<int>(seg.size() * 2, 0);
