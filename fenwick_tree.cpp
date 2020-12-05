@@ -23,6 +23,19 @@ struct Fenwick{
 		modify(a, v);
 		modify(b + 1, -v);
 	}
+
+	int operator[](int j){
+		return query(j);
+	}
+	int operator()(int x, int y){
+		return rangequery(x, y);	
+	}
+	void operator+=(tuple<int, int> x){
+		modify(get<0>(x), get<1>(x));
+	}
+	void operator+=(tuple<int, int, int> x){
+		rangeupdate(get<0>(x), get<1>(x), get<2>(x));
+	}
 	
 	Fenwick(int s){
 		s += 3;
