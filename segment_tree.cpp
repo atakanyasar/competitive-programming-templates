@@ -72,6 +72,12 @@ struct MaxSeg{
 				query(j * 2 + 1, a, b, (x + y) / 2 + 1, y)
 			    );
 	}
+	void operator()(int l, int r, int v){
+		rangeupdate(1, l, r, 0, S-1, v);
+	}
+	int operator()(int l, int r){
+		return query(1, l, r, 0, S-1);
+	}
 };
 
 struct MinSeg{
@@ -147,6 +153,12 @@ struct MinSeg{
 				query(j * 2, a, b, x, (x + y) / 2), 
 				query(j * 2 + 1, a, b, (x + y) / 2 + 1, y)
 			    );
+	}
+	void operator()(int l, int r, int v){
+		rangeupdate(1, l, r, 0, S-1, v);
+	}
+	int operator()(int l, int r){
+		return query(1, l, r, 0, S-1);
 	}
 };
 
@@ -232,5 +244,11 @@ struct SumSeg{
 		if(a <= x && y <= b) return seg[j];
 
 		return rangequery(j * 2, a, b, x, (x + y) / 2) + rangequery(j * 2 + 1, a, b, (x + y) / 2 + 1, y);
+	}
+	void operator()(int l, int r, int v){
+		rangeupdate(1, l, r, 0, S-1, v);
+	}
+	int operator()(int l, int r){
+		return query(1, l, r, 0, S-1);
 	}
 };
