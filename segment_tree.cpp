@@ -181,11 +181,11 @@ struct SumSeg{
 
 		S = (1 << (int)ceil(log2(seg.size())));
 		int l = S - seg.size();
-		for(int i = 0; i < l; i++) seg.pb(0);
+		for(int i = 0; i < l; i++) seg.push_back(0);
 	
 		reverse(all(seg));
-		for(int i = 1; i < seg.size(); i += 2) seg.pb(seg[i] + seg[i - 1]);
-		seg.pb(0);
+		for(int i = 1; i < seg.size(); i += 2) seg.push_back(seg[i] + seg[i - 1]);
+		seg.push_back(0);
 		reverse(all(seg));
 	
 		lazy = vector<int>(seg.size() * 2, 0);
@@ -249,6 +249,6 @@ struct SumSeg{
 		rangeupdate(1, l, r, 0, S-1, v);
 	}
 	int operator()(int l, int r){
-		return query(1, l, r, 0, S-1);
+		return rangequery(1, l, r, 0, S-1);
 	}
 };
