@@ -158,18 +158,17 @@ namespace Treap{
  
 	}
 	
-	int erase(int& j, Node v){
+	void erase(int& j, Node v){
 
 		push(j);
 
 		if(node[j] == v) {
 			int ret = j;
 			merge(j, node[j].left, node[j].right);
-			return ret;
 		}
 		else{
 			if(v < node[j]) return erase(node[j].left, v);
-			else return erase(node[j].right, v);
+			else erase(node[j].right, v);
 		}
 		
 		push(node[j].left);
