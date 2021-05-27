@@ -1,8 +1,8 @@
-
 struct MaxSeg{
 	vector<int> seg;
 	vector<int> lazy;
 	int S;
+	const int INF = 1e18;
 
 	void build(){
 
@@ -10,10 +10,10 @@ struct MaxSeg{
 		int l = S - seg.size();
 		for(int i = 0; i < l; i++) seg.push_back(-INF);
 	
-		reverse(all(seg));
+		reverse(seg.begin(), seg.end());
 		for(int i = 1; i < seg.size(); i += 2) seg.push_back(max(seg[i], seg[i - 1]));
 		seg.push_back(0);
-		reverse(all(seg));
+		reverse(seg.begin(), seg.end());
 	
 		lazy = vector<int>(seg.size() * 2, 0);
 	}
@@ -84,16 +84,17 @@ struct MinSeg{
 	vector<int> seg;
 	vector<int> lazy;
 	int S;
+	const int INF = 1e18;
 	
 	void build(){
 		S = (1 << (int)ceil(log2(seg.size())));
 		int l = S - seg.size();
 		for(int i = 0; i < l; i++) seg.push_back(INF);
 	
-		reverse(all(seg));
+		reverse(seg.begin(), seg.end());
 		for(int i = 1; i < seg.size(); i += 2) seg.push_back(min(seg[i], seg[i - 1]));
 		seg.push_back(0);
-		reverse(all(seg));
+		reverse(seg.begin(), seg.end());
 	
 		lazy = vector<int>(seg.size() * 2, 0);
 	}
@@ -183,10 +184,10 @@ struct SumSeg{
 		int l = S - seg.size();
 		for(int i = 0; i < l; i++) seg.push_back(0);
 	
-		reverse(all(seg));
+		reverse(seg.begin(), seg.end());
 		for(int i = 1; i < seg.size(); i += 2) seg.push_back(seg[i] + seg[i - 1]);
 		seg.push_back(0);
-		reverse(all(seg));
+		reverse(seg.begin(), seg.end());
 	
 		lazy = vector<int>(seg.size() * 2, 0);
 		sub = vector<int>(seg.size(), 0);
